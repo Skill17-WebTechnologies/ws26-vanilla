@@ -17,7 +17,12 @@ RUN rm -f /var/www/html/Dockerfile /var/www/html/docker-compose.yml /var/www/htm
 RUN mkdir -p /var/www/data && chown -R www-data:www-data /var/www/data /var/www/html
 
 COPY docker-entrypoint.sh /usr/local/bin/entrypoint
-RUN chmod +x /usr/local/bin/entrypoint
+# Strip any CR before making the entrypoint executable. .gitattributes already
+# forces LF on checkout, but that only helps a fresh clone — this keeps a working
+# copy that was checked out before it, or copied off a Windows share, from
+# producing "env: 'bash\r': No such file or directory" and exit 127.
+RUN sed -i 's/\r$//' /usr/local/bin/entrypoint \
+    && chmod +x /usr/local/bin/entrypoint
 
 ENV DB_PATH=/var/www/data/app.db
 
