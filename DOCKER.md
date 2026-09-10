@@ -16,4 +16,7 @@ Tasks live in a self-contained **SQLite** file at `/var/www/data/app.db` — no 
 server, and deliberately outside the document root so it cannot be fetched over HTTP.
 The entrypoint creates and seeds the schema before Apache starts. Override with `DB_PATH`.
 
+Using MySQL or MariaDB instead? Swap the DSN in `config/db.php` — `pdo_mysql` and
+`mysqli` are compiled into the image alongside `pdo_sqlite`, so nothing needs rebuilding.
+
 Pinned: PHP 8.3 (Apache). No package manager, no build step, no dependencies.
