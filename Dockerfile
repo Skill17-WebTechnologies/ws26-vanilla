@@ -2,8 +2,12 @@
 # from one document root — no extra web server config needed.
 FROM php:8.3-apache
 
+# Both database stacks are compiled in, so a competitor can point config/db.php at
+# either one without rebuilding: pdo_sqlite for the self-contained file that ships with
+# this template, pdo_mysql/mysqli for a MySQL or MariaDB server. The MySQL extensions
+# use the bundled mysqlnd driver, so they need no extra system packages.
 RUN apt-get update && apt-get install -y --no-install-recommends libsqlite3-dev \
-    && docker-php-ext-install -j"$(nproc)" pdo_sqlite \
+    && docker-php-ext-install -j"$(nproc)" pdo_sqlite pdo_mysql mysqli \
     && rm -rf /var/lib/apt/lists/*
 
 # Serve index.php first; index.html stays reachable at /index.html.

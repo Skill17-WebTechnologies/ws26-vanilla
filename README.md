@@ -50,10 +50,11 @@ schema is created and seeded on container start by `docker-entrypoint.sh`.
 The file lives at `/var/www/data/app.db`, **outside the document root**, so it cannot be
 downloaded over HTTP. Override the location with the `DB_PATH` environment variable.
 
-To use MySQL instead, swap the DSN in `config/db.php` (the alternative is written in a
-comment there) and add `pdo_mysql` to the `docker-php-ext-install` line in the `Dockerfile`.
+To use MySQL or MariaDB instead, swap the DSN in `config/db.php` (the alternative is
+written in a comment there) and point it at your server. The `pdo_mysql` and `mysqli`
+extensions are already compiled into the image, so no `Dockerfile` change is needed.
 
 ## Stack
 
-- PHP 8.3 (Apache, `pdo_sqlite`)
+- PHP 8.3 (Apache, `pdo_sqlite` + `pdo_mysql`/`mysqli`)
 - No framework, no build step, no dependencies
