@@ -32,7 +32,8 @@ function e(string $value): string
   <main class="card">
     <h1>Vanilla <span class="v">PHP</span></h1>
     <p>WSC2026 Web Technologies — no framework. This page is rendered by
-      <code>index.php</code>, reading SQLite through <code>config/db.php</code>.</p>
+      <code>index.php</code>, reading MySQL through <code>config/db.php</code>.
+      The connection comes from <code>.env</code> — nothing is hardcoded.</p>
 
     <?php if ($error !== null): ?>
       <p class="warn">⚠️ Database not available: <?= e($error) ?></p>
@@ -44,7 +45,8 @@ function e(string $value): string
       </ul>
     <?php endif; ?>
 
-    <p>JSON API: <code>GET api/tasks.php</code></p>
+    <p>JSON API: <code>GET api/tasks.php</code> —
+      connection check: <code><a href="api/db-check.php">api/db-check.php</a></code></p>
     <p class="alt">Building with plain JavaScript instead? → <a href="index.html">index.html</a></p>
   </main>
 </body>
